@@ -1,20 +1,18 @@
 <script setup>
-import { useDark, useToggle } from "@vueuse/core";
+import { useDark, useToggle } from '@vueuse/core'
 
-const isDark = useDark({ 
-  selector: "body", //element to add attribute to
-  attribute: "theme", // attribute name
-  valueDark: "custom-dark", // attribute value for dark mode
-  valueLight: "custom-light", // attribute value for light mode
-});
-const toggleDark = useToggle(isDark);
+const isDark = useDark({
+  selector: 'body', //element to add attribute to
+  attribute: 'theme', // attribute name
+  valueDark: 'custom-dark', // attribute value for dark mode
+  valueLight: 'custom-light' // attribute value for light mode
+})
+const toggleDark = useToggle(isDark)
 </script>
 
 <template>
   <div class="container">
-    <button @click="toggleDark()">
-      Toggle Color Mode
-    </button>
+    <button @click="toggleDark()" class="toggleColor">Toggle Color Mode</button>
     <h2>{{ title }}</h2>
     <form @submit.prevent="addTodo">
       <label for="newTodo" class="todoLabel">New Todo</label>
@@ -22,7 +20,7 @@ const toggleDark = useToggle(isDark);
       <button type="submit" name="button" class="addNew">Add</button>
     </form>
     <li v-for="todo in todos" :key="todo.title" class="todoList">
-      <input type="checkbox" name="done" v-model="todo.done" class="checkbox"/>
+      <input type="checkbox" name="done" v-model="todo.done" class="checkbox" />
       <span :class="{ done: todo.done }">{{ todo.title }}</span>
       <button @click="removeTodo(todo)" type="button" class="remove">Remove</button>
     </li>
@@ -42,10 +40,14 @@ export default {
   },
   methods: {
     addTodo() {
-      this.todos.push({
-        title: this.newTodo,
-        done: false
-      })
+      if (this.newTodo === '') {
+        return
+      } else {
+        this.todos.push({
+          title: this.newTodo,
+          done: false
+        })
+      }
       this.newTodo = ''
     },
     removeTodo(todo) {
@@ -81,7 +83,7 @@ h2 {
   font-size: 3.5rem;
   color: black;
 }
-.newTodo{
+.newTodo {
   padding: 0.5rem 1.5rem;
   margin: 0 10px 0 10px;
   font-size: 1rem;
@@ -94,16 +96,16 @@ h2 {
   text-decoration: line-through;
 }
 .container {
-    width: 40%;
-    top: 50%;
-    left: 50%;
-    background: white;
-    border-radius: 10px;
-    min-width: 450px;
-    position: absolute;
-    min-height: 100px;
-    transform: translate(-50%,-50%);
-    text-align: center;
+  width: 40%;
+  top: 50%;
+  left: 50%;
+  background: white;
+  border-radius: 10px;
+  min-width: 450px;
+  position: absolute;
+  min-height: 100px;
+  transform: translate(-50%, -50%);
+  text-align: center;
 }
 .todoList {
   list-style-type: none;
@@ -111,8 +113,8 @@ h2 {
   padding: 0;
   font-size: 1.5rem;
   color: black;
-  display:flex;
-  justify-content:space-between;
+  display: flex;
+  justify-content: space-between;
 }
 .todoLabel {
   color: black;
@@ -125,23 +127,28 @@ h2 {
 .remove {
   text-align: right;
   margin-left: 315px;
-  display:flex;
-  justify-content:space-between;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
 }
 .checkbox {
   margin-left: 5px;
 }
 .addNew {
-  
+  margin-bottom: 5px;
 }
 
-[theme="custom-dark"] {
-  background: #16171d; 
+[theme='custom-dark'] {
+  background: #16171d;
   color: #fff;
 }
 
-[theme="custom-light"] {
+[theme='custom-light'] {
   background: white;
   color: #16171d;
+}
+.toggleColor {
+  margin-top: 5px;
 }
 </style>
